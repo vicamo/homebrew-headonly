@@ -29,15 +29,15 @@ class F2c < Formula
 
     # hello world test
     (testpath/"test.f").write <<-EOS.undent
-    C comment line
-          program hello
-          print*, 'hello world'
-          stop
-          end
+      C comment line
+            program hello
+            print*, 'hello world'
+            stop
+            end
     EOS
     system "#{bin}/f2c", "test.f"
     assert (testpath/"test.c").exist?
     system "cc", "-O", "-o", "test", "test.c", "-lf2c"
-    assert_equal " hello world\n", `#{testpath}/test`
+    assert_equal " hello world\n", shell_output("#{testpath}/test")
   end
 end
